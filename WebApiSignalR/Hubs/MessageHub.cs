@@ -9,9 +9,15 @@ namespace WebApiSignalR.Hubs
             return base.OnConnectedAsync();
         }
         
-        public async Task SendMessage(double message)
+        public async Task SendMessage(string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage",message);
+            await Clients.Others.SendAsync("ReceiveMessage",message+"'s Offer : ",FileHelper.Read());
         }
+
+        public async Task SendWinnerMessage(string message)
+        {
+            await Clients.Others.SendAsync("ReceiveInfo", message, FileHelper.Read());
+        }
+
     }
 }
