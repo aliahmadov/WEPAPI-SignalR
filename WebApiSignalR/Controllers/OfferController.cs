@@ -14,9 +14,13 @@ namespace WebApiSignalR.Controllers
         public OfferController(IHubContext<MessageHub> messageHub)
         {
             this.messageHub = messageHub;
-            if (!System.IO.File.Exists("data.txt"))
+            if (!System.IO.File.Exists("mercedes.txt"))
             {
-                FileHelper.Write(1000);
+                FileHelper.Write("mercedes",5000);
+            }
+            if (!System.IO.File.Exists("chevrolet.txt"))
+            {
+                FileHelper.Write("chevrolet",1300);
             }
         }
 
@@ -27,11 +31,24 @@ namespace WebApiSignalR.Controllers
             return FileHelper.Read();
         }
 
+        [HttpGet("/Room")]
+        public double GetRoom(string room)
+        {
+            //messageHub.Clients.All.SendOffersToUser(data);
+            return FileHelper.Read(room);
+        }
+
         [HttpGet("/Increase")]
         public async void Get(double number)
         {
             var data = FileHelper.Read() + number;
             FileHelper.Write(data);
+        }
+        [HttpGet("/IncreaseRoom")]
+        public async void Get(string room,double number)
+        {
+            var data = FileHelper.Read(room) + number;
+            FileHelper.Write(room,data);
         }
     }
 }
