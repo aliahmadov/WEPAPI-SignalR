@@ -14,6 +14,7 @@ namespace WebApiSignalR.Controllers
         public OfferController(IHubContext<MessageHub> messageHub)
         {
             this.messageHub = messageHub;
+            
             if (!System.IO.File.Exists("mercedes.txt"))
             {
                 FileHelper.Write("mercedes",5000);
